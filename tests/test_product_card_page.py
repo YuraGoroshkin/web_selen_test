@@ -1,10 +1,13 @@
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 def test_mac_book_price(browser):
     if browser.current_url == "http://192.168.31.208:8081/":
         mac_book = browser.find_element(By.CSS_SELECTOR, ".image")
         mac_book.click()
+    WebDriverWait(browser, 3).until(EC.url_contains("http://192.168.31.208:8081/macbook"))
     price = "$602.00"
     mac_book_price = browser.find_element(By.XPATH, '//*[@id="content"]/div/div[2]/ul[2]/li[1]/h2')
     assert price == mac_book_price.text

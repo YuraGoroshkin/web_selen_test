@@ -1,8 +1,11 @@
 from selenium.webdriver.common.by import By
-import time
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 def test_click_logo_home_page(browser):
+    browser.implicitly_wait(2)
+    WebDriverWait(browser, 3).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#logo')))
     logo = browser.find_element(By.CSS_SELECTOR, "#logo")
     old = browser.current_url
     logo.click()
