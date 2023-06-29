@@ -1,12 +1,14 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from pages.AdminPage import AdminPage
 
 
 def test_catalog_accessible_name(browser):
     browser.get('http://192.168.31.208:8081/admin/')
     WebDriverWait(browser, 3).until(EC.url_contains("http://192.168.31.208:8081/admin/"))
     username_form = browser.find_element(By.CSS_SELECTOR, "#input-username")
+    AdminPage.login(browser)
     assert username_form.accessible_name == "Username"
 
 
