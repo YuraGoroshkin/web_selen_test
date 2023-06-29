@@ -5,7 +5,8 @@ from pages.AdminPage import AdminPage
 
 
 def test_catalog_accessible_name(browser):
-    browser.get('http://192.168.31.208:8081/admin/')
+    path = 'admin/'
+    browser.get(browser.current_url + path)
     WebDriverWait(browser, 3).until(EC.url_contains("http://192.168.31.208:8081/admin/"))
     username_form = browser.find_element(By.CSS_SELECTOR, "#input-username")
     AdminPage.login(browser)
