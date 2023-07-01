@@ -9,9 +9,6 @@ def test_catalog_accessible_name(browser):
     browser.get(browser.current_url + path)
     WebDriverWait(browser, 3).until(EC.url_contains(browser.current_url))
     username_form = browser.find_element(By.CSS_SELECTOR, "#input-username")
-    AdminPage.login(browser)
-    d = AdminPage.go_to_products(browser)
-    AdminPage.add_product(browser)
     assert username_form.accessible_name == "Username"
 
 
@@ -41,3 +38,17 @@ def test_link_forgot(browser):
     browser.get(browser.current_url + path)
     link_forgot = browser.find_element(By.XPATH, '//span[@class="help-block"]/*')
     assert link_forgot.get_attribute('href') == browser.current_url + "index.php?route=common/forgotten"
+
+
+def test_add_and_delet_product(browser):
+    path = 'admin/'
+    browser.get(browser.current_url + path)
+    AdminPage.login(browser)
+    AdminPage.go_to_products(browser)
+    old = len(browser.find_elements(By.XPATH, '//tbody/tr'))
+    AdminPage.add_product(browser)
+    new = len(browser.find_elements(By.XPATH, '//tbody/tr'))
+    AdminPage.delet_product(browser)
+    after_delet = len(browser.find_elements(By.XPATH, '//tbody/tr'))
+    assert old < new
+    assert old == after_delet

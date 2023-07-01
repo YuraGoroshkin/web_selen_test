@@ -29,3 +29,11 @@ class AdminPage(HomePage):
         self.find_elements(By.CSS_SELECTOR, 'a[data-toggle="tab"]')[1].click()
         self.find_elements(By.CSS_SELECTOR, 'input[id="input-model"]')[0].send_keys('Test')
         self.find_element(By.CSS_SELECTOR, 'button[data-original-title="Save"]').click()
+
+    def delet_product(self):
+        self.find_element(By.XPATH, '//tbody/tr[20]/td/input').click()
+        self.find_element(By.CSS_SELECTOR, 'button[class="btn btn-danger"]').click()
+        sleep(0.2)
+        alert = self.switch_to.alert
+        alert.accept()
+        sleep(0.1)
