@@ -11,7 +11,7 @@ def pytest_addoption(parser):
     parser.addoption("--headless", action="store_true")
 
 
-@pytest.fixture(scope="session")
+@pytest.fixture
 def browser(request):
     browser_name = request.config.getoption("--browser")
     maximize = request.config.getoption("--maximize")
