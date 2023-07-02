@@ -43,7 +43,7 @@ def test_change_currency_euro(browser):
     # евро = 0 / стерлинг = 1 / доллар = 2
     HomePage.change_currency(browser, num)
     valuta = browser.find_elements(By.CSS_SELECTOR, 'p[class="price"]')[0].text
-    pass
+    assert '€' in valuta
 
 
 def test_change_currency_sterling(browser):
@@ -52,7 +52,7 @@ def test_change_currency_sterling(browser):
     # евро = 0 / стерлинг = 1 / доллар = 2
     HomePage.change_currency(browser, num)
     valuta = browser.find_elements(By.CSS_SELECTOR, 'p[class="price"]')[0].text
-    pass
+    assert '£' in valuta
 
 
 def test_change_currency_dollar(browser):
@@ -61,5 +61,4 @@ def test_change_currency_dollar(browser):
     # евро = 0 / стерлинг = 1 / доллар = 2
     HomePage.change_currency(browser, num)
     valuta = browser.find_elements(By.CSS_SELECTOR, 'p[class="price"]')[0].text
-    find
-    pass
+    assert '$' in valuta
