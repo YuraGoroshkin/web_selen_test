@@ -1,17 +1,20 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from pages.RegistrationPage import RegistrationPage
 
 
 def test_header(browser):
-    browser.get('http://192.168.31.208:8081/index.php?route=account/register')
+    path = 'index.php?route=account/register'
+    browser.get(browser.current_url + path)
     WebDriverWait(browser, 2).until(EC.url_contains("http://192.168.31.208:8081/index.php?route=account/register"))
     header = browser.find_element(By.XPATH, '//*[@id="content"]/h1')
     assert header.text == "Register Account"
 
 
 def test_account_form(browser):
-    browser.get('http://192.168.31.208:8081/index.php?route=account/register')
+    path = 'index.php?route=account/register'
+    browser.get(browser.current_url + path)
     WebDriverWait(browser, 3).until(EC.url_contains("http://192.168.31.208:8081/index.php?route=account/register"))
     account_form = browser.find_element(By.CSS_SELECTOR, 'fieldset#account')
     form = account_form.text.split(sep='\n')
@@ -23,7 +26,8 @@ def test_account_form(browser):
 
 
 def test_account_form_password(browser):
-    browser.get('http://192.168.31.208:8081/index.php?route=account/register')
+    path = 'index.php?route=account/register'
+    browser.get(browser.current_url + path)
     WebDriverWait(browser, 3).until(EC.url_contains("http://192.168.31.208:8081/index.php?route=account/register"))
     account_form_password = browser.find_element(By.CSS_SELECTOR, 'fieldset:nth-of-type(2)')
     form = account_form_password.text.split(sep='\n')
@@ -33,7 +37,8 @@ def test_account_form_password(browser):
 
 
 def test_radio_button(browser):
-    browser.get('http://192.168.31.208:8081/index.php?route=account/register')
+    path = 'index.php?route=account/register'
+    browser.get(browser.current_url + path)
     WebDriverWait(browser, 3).until(EC.url_contains("http://192.168.31.208:8081/index.php?route=account/register"))
     radio_button = browser.find_elements(By.XPATH, '//div[@class="col-sm-10"]/label')
     assert radio_button[0].text == "Yes"
@@ -41,7 +46,17 @@ def test_radio_button(browser):
 
 
 def test_continue_button(browser):
-    browser.get('http://192.168.31.208:8081/index.php?route=account/register')
+    path = 'index.php?route=account/register'
+    browser.get(browser.current_url + path)
     WebDriverWait(browser, 3).until(EC.url_contains("http://192.168.31.208:8081/index.php?route=account/register"))
     continue_button = browser.find_element(By.XPATH, '//input[@value="Continue"]')
     assert continue_button.tag_name == "input"
+
+
+def test_registration_new(browser):
+    path = 'index.php?route=account/register'
+    browser.get(browser.current_url + path)
+    WebDriverWait(browser, 3).until(EC.url_contains("http://192.168.31.208:8081/index.php?route=account/register"))
+    RegistrationPage.fill_personal(browser)
+    access = browser.find_element(By.XPATH, '//div/h1').text
+    assert access == 'Your Account Has Been Created!'
