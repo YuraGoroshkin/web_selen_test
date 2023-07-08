@@ -1,9 +1,9 @@
-from pages.HomePage import HomePage
+from pages.Application import Application
 from selenium.webdriver.common.by import By
 from time import sleep
 
 
-class AdminPage(HomePage):
+class AdminPage(Application):
 
     def login(self):
         self.find_element(By.CSS_SELECTOR, "#input-username").click()
@@ -37,3 +37,21 @@ class AdminPage(HomePage):
         alert = self.switch_to.alert
         alert.accept()
         sleep(0.1)
+
+    def find_username_form(self):
+        return self.find_element(By.CSS_SELECTOR, "#input-username")
+
+    def find_password_form(self):
+        return self.find_element(By.CSS_SELECTOR, "#input-password")
+
+    def find_button(self):
+        return self.find_element(By.CSS_SELECTOR, "button")
+
+    def find_header(self):
+        return self.find_element(By.CSS_SELECTOR, 'h1.panel-title')
+
+    def find_link_forgot(self):
+        return self.find_element(By.XPATH, '//span[@class="help-block"]/*')
+
+    def count_the_number_of_products(self):
+        return len(self.find_elements(By.XPATH, '//tbody/tr'))
