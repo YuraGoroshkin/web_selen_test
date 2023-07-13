@@ -1,6 +1,8 @@
 from pages.AdminPage import AdminPage
+import allure
 
 
+@allure.epic('Tests_admin_page')
 def test_catalog_accessible_name(browser):
     path = 'admin/'
     browser.get(browser.current_url + path)
@@ -8,6 +10,7 @@ def test_catalog_accessible_name(browser):
     assert username_form.accessible_name == "Username"
 
 
+@allure.epic('Tests_admin_page')
 def test_catalog_accessible_password(browser):
     path = 'admin/'
     browser.get(browser.current_url + path)
@@ -15,6 +18,7 @@ def test_catalog_accessible_password(browser):
     assert password_form.accessible_name == "Password"
 
 
+@allure.epic('Tests_admin_page')
 def test_button_login(browser):
     path = 'admin/'
     browser.get(browser.current_url + path)
@@ -22,6 +26,7 @@ def test_button_login(browser):
     assert button.aria_role == "button"
 
 
+@allure.epic('Tests_admin_page')
 def test_header(browser):
     path = 'admin/'
     browser.get(browser.current_url + path)
@@ -29,6 +34,7 @@ def test_header(browser):
     assert header.text == "Please enter your login details."
 
 
+@allure.epic('Tests_admin_page')
 def test_link_forgot(browser):
     path = 'admin/'
     browser.get(browser.current_url + path)
@@ -36,6 +42,7 @@ def test_link_forgot(browser):
     assert link_forgot.get_attribute('href') == browser.current_url + "index.php?route=common/forgotten"
 
 
+@allure.epic('Tests_admin_page')
 def test_add_and_delet_product(browser):
     path = 'admin/'
     browser.get(browser.current_url + path)
