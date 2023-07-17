@@ -33,10 +33,11 @@ def test_featured_text(browser):
     assert text == featured[0].text
 
 
-@pytest.mark.parametrize('num, valuta', [(0, '€'), (1, '£'), (2, '$')])
-def test_change_currency(browser, num, valuta):
+@pytest.mark.parametrize('num, description', [(0, 'euro'), (1, 'pound'), (2, 'dollar')])
+def test_change_currency(browser, num, description):
     browser.implicitly_wait(2)
+    valuta = ['€', '£', '$']
     # евро = 0 / стерлинг = 1 / доллар = 2
     HomePage.change_currency(browser, num)
     valuta_in_price = HomePage.get_valuta_in_price(browser)
-    assert valuta in valuta_in_price
+    assert valuta[num] in valuta_in_price
