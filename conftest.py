@@ -15,6 +15,7 @@ def pytest_addoption(parser):
     parser.addoption("--maximize", action="store_true")
     parser.addoption("--headless", action="store_true")
     parser.addoption("--log_level", action="store", default="DEBUG")
+    parser.addoption("--remote", action="store", default="no")
 
 
 log_map = {
@@ -29,6 +30,7 @@ def browser(request):
     headless = request.config.getoption("--maximize")
     url = request.config.getoption("--url")
     log_level = request.config.getoption("--log_level")
+    remote = request.config.getoption("--remote")
 
     class WebdriverListener(AbstractEventListener):
         logger = logging.getLogger(request.node.name)
@@ -74,15 +76,16 @@ def browser(request):
         def after_quit(self, driver):
             self.logger.info(f"Driver Quit")
 
-        # def on_exception(self, exception, driver):
-        #     logger.error(f'Oooops i got: {exception}')
-        #     driver.save_screenshot(f'logs/{driver.session_id}.png')
-
     if browser_name == "firefox":
         options = FirefoxOptions()
         if headless:
             options.headless = True
         driver = webdriver.Firefox(options=options)
+        if remote == "y":
+            driver = webdriver.Remote(
+                command_executor='http://127.0.0.1',
+                options=options
+            )
         driver.get(url)
     elif browser_name == "chrome":
         service = Service()
@@ -90,22 +93,29 @@ def browser(request):
         if headless:
             options.add_argument("headless=new")
         driver = webdriver.Chrome(service=service)
+        if remote == "y":
+            driver = webdriver.Remote(
+                command_executor='http://127.0.0.1',
+                options=options
+            )
         driver.get(url)
     elif browser_name == "edge":
         options = EdgeOptions()
         if headless:
             options.add_argument("headless=new")
         driver = webdriver.Edge(options=options)
+        if remote == "y":
+            driver = webdriver.Remote(
+                command_executor='http://127.0.0.1',
+                options=options
+            )
         driver.get(url)
     else:
         raise ValueError(f"Driver {browser_name} not supported.")
     driver = EventFiringWebDriver(driver, WebdriverListener())
     driver.test_name = request.node.name
     driver.log_level = log_level
-
     if maximize:
         driver.maximize_window()
-
     yield driver
-
     driver.quit()
