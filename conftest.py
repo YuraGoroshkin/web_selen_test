@@ -5,6 +5,8 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver import FirefoxOptions, ChromeOptions, EdgeOptions
 from selenium import webdriver
 from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEventListener
+import allure
+import json
 
 DRIVERS = os.path.expanduser
 
@@ -83,10 +85,14 @@ def browser(request):
         driver = webdriver.Firefox(options=options)
         if remote == "y":
             driver = webdriver.Remote(
-                command_executor='http://127.0.0.1',
+                command_executor='http://127.0.0.1:4444',
                 options=options
             )
         driver.get(url)
+        allure.attach(
+            name=driver.session_id,
+            body=json.dumps(driver.capabilities),
+            attachment_type=allure.attachment_type.JSON)
     elif browser_name == "chrome":
         service = Service()
         options = ChromeOptions()
@@ -95,10 +101,14 @@ def browser(request):
         driver = webdriver.Chrome(service=service)
         if remote == "y":
             driver = webdriver.Remote(
-                command_executor='http://127.0.0.1',
+                command_executor='http://192.168.31.142:4444',
                 options=options
             )
         driver.get(url)
+        allure.attach(
+            name=driver.session_id,
+            body=json.dumps(driver.capabilities),
+            attachment_type=allure.attachment_type.JSON)
     elif browser_name == "edge":
         options = EdgeOptions()
         if headless:
@@ -106,10 +116,14 @@ def browser(request):
         driver = webdriver.Edge(options=options)
         if remote == "y":
             driver = webdriver.Remote(
-                command_executor='http://127.0.0.1',
+                command_executor='http://127.0.0.1:4444',
                 options=options
             )
         driver.get(url)
+        allure.attach(
+            name=driver.session_id,
+            body=json.dumps(driver.capabilities),
+            attachment_type=allure.attachment_type.JSON)
     else:
         raise ValueError(f"Driver {browser_name} not supported.")
     driver = EventFiringWebDriver(driver, WebdriverListener())
