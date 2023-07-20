@@ -17,7 +17,7 @@ def pytest_addoption(parser):
     parser.addoption("--maximize", action="store_true")
     parser.addoption("--headless", action="store_true")
     parser.addoption("--log_level", action="store", default="DEBUG")
-    parser.addoption("--remote", action="store", default="no")
+    parser.addoption("--remote", action="store_true")
 
 
 log_map = {
@@ -83,7 +83,7 @@ def browser(request):
         if headless:
             options.headless = True
         driver = webdriver.Firefox(options=options)
-        if remote == "y":
+        if remote:
             driver = webdriver.Remote(
                 command_executor='http://127.0.0.1:4444',
                 options=options
@@ -99,7 +99,7 @@ def browser(request):
         if headless:
             options.add_argument("headless=new")
         driver = webdriver.Chrome(service=service)
-        if remote == "y":
+        if remote:
             driver = webdriver.Remote(
                 command_executor='http://192.168.31.142:4444',
                 options=options
@@ -114,7 +114,7 @@ def browser(request):
         if headless:
             options.add_argument("headless=new")
         driver = webdriver.Edge(options=options)
-        if remote == "y":
+        if remote:
             driver = webdriver.Remote(
                 command_executor='http://127.0.0.1:4444',
                 options=options
