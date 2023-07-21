@@ -18,7 +18,7 @@ def pytest_addoption(parser):
     parser.addoption("--headless", action="store_true")
     parser.addoption("--log_level", action="store", default="DEBUG")
     parser.addoption("--remote", action="store_true")
-    parser.addoption("--executor", action="store", default="127.0.0.1:4444/wd/hub")
+    parser.addoption("--executor", action="store", default="http://127.0.0.1:4444/wd/hub")
 
 
 log_map = {

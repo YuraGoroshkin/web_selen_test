@@ -13,6 +13,10 @@ class AdminPage(Application):
         self.find_element(By.CSS_SELECTOR, "#input-password").click()
         self.find_element(By.CSS_SELECTOR, "#input-password").send_keys(password)
         self.find_element(By.XPATH, "//button").click()
+        allure.attach(body=self.get_screenshot_as_png(),
+                      name="screenshot_image",
+                      attachment_type=allure.attachment_type.PNG
+                      )
 
     @allure.step('Раскрыть меню Catalog')
     def open_catalog_list(self):
