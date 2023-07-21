@@ -1,5 +1,6 @@
 from pages.AdminPage import AdminPage
 import allure
+import pytest
 
 
 @allure.epic('Tests_admin_page')
@@ -43,10 +44,11 @@ def test_link_forgot(browser):
 
 
 @allure.epic('Tests_admin_page')
-def test_add_and_delet_product(browser):
+@pytest.mark.parametrize('user, password', [('user', 'bitnami')])
+def test_add_and_delet_product(browser, user, password):
     path = 'admin/'
     browser.get(browser.current_url + path)
-    AdminPage.login(browser)
+    AdminPage.login(browser, user=user, password=password)
     AdminPage.go_to_products(browser)
     old = AdminPage.count_the_number_of_products(browser)
     AdminPage.add_product(browser)

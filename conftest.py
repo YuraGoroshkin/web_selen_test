@@ -18,6 +18,7 @@ def pytest_addoption(parser):
     parser.addoption("--headless", action="store_true")
     parser.addoption("--log_level", action="store", default="DEBUG")
     parser.addoption("--remote", action="store_true")
+    parser.addoption("--executor", action="store", default="127.0.0.1:4444/wd/hub")
 
 
 log_map = {
@@ -33,6 +34,7 @@ def browser(request):
     url = request.config.getoption("--url")
     log_level = request.config.getoption("--log_level")
     remote = request.config.getoption("--remote")
+    executor = request.config.getoption("--executor")
 
     class WebdriverListener(AbstractEventListener):
         logger = logging.getLogger(request.node.name)
@@ -82,12 +84,13 @@ def browser(request):
         options = FirefoxOptions()
         if headless:
             options.headless = True
-        driver = webdriver.Firefox(options=options)
         if remote:
             driver = webdriver.Remote(
-                command_executor='http://127.0.0.1:4444',
+                command_executor=executor,
                 options=options
             )
+        else:
+            driver = webdriver.Firefox(options=options)
         driver.get(url)
         allure.attach(
             name=driver.session_id,
@@ -98,12 +101,13 @@ def browser(request):
         options = ChromeOptions()
         if headless:
             options.add_argument("headless=new")
-        driver = webdriver.Chrome(service=service)
         if remote:
             driver = webdriver.Remote(
-                command_executor='http://192.168.31.142:4444',
+                command_executor=executor,
                 options=options
             )
+        else:
+            driver = webdriver.Chrome(service=service)
         driver.get(url)
         allure.attach(
             name=driver.session_id,
@@ -113,12 +117,13 @@ def browser(request):
         options = EdgeOptions()
         if headless:
             options.add_argument("headless=new")
-        driver = webdriver.Edge(options=options)
         if remote:
             driver = webdriver.Remote(
-                command_executor='http://127.0.0.1:4444',
+                command_executor=executor,
                 options=options
             )
+        else:
+            driver = webdriver.Edge(options=options)
         driver.get(url)
         allure.attach(
             name=driver.session_id,

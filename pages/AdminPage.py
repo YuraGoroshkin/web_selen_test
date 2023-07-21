@@ -7,11 +7,11 @@ import allure
 class AdminPage(Application):
 
     @allure.step('Авторизовался под администратором сайта')
-    def login(self):
+    def login(self, user, password):
         self.find_element(By.CSS_SELECTOR, "#input-username").click()
-        self.find_element(By.CSS_SELECTOR, "#input-username").send_keys('user')
+        self.find_element(By.CSS_SELECTOR, "#input-username").send_keys(user)
         self.find_element(By.CSS_SELECTOR, "#input-password").click()
-        self.find_element(By.CSS_SELECTOR, "#input-password").send_keys('bitnami')
+        self.find_element(By.CSS_SELECTOR, "#input-password").send_keys(password)
         self.find_element(By.XPATH, "//button").click()
 
     @allure.step('Раскрыть меню Catalog')
