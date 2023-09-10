@@ -161,4 +161,3 @@ cython_debug/
 /chromedriver/
 /allure-report/
 /tests/allure-results/
-/tests/logs/

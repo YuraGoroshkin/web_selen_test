@@ -12,13 +12,13 @@ DRIVERS = os.path.expanduser
 
 
 def pytest_addoption(parser):
-    parser.addoption("--browser", default="chrome")
+    parser.addoption("--browser", default="edge")
     parser.addoption("--url", default="http://192.168.31.208:8081/")
     parser.addoption("--maximize", action="store_true")
     parser.addoption("--headless", action="store_true")
     parser.addoption("--log_level", action="store", default="DEBUG")
     parser.addoption("--remote", action="store_true")
-    parser.addoption("--executor", action="store", default="http://127.0.0.1:4444/wd/hub")
+    parser.addoption("--executor", action="store", default="http://192.168.31.142:4444/wd/hub")
 
 
 log_map = {
