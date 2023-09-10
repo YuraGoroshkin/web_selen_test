@@ -18,7 +18,7 @@ def pytest_addoption(parser):
     parser.addoption("--headless", action="store_true")
     parser.addoption("--log_level", action="store", default="DEBUG")
     parser.addoption("--remote", action="store_true")
-    parser.addoption("--executor", action="store", default="http://192.168.31.142:4444/wd/hub")
+    parser.addoption("--executor", action="store", default="http://192.168.31.208:4444/wd/hub")
 
 
 log_map = {
@@ -45,41 +45,41 @@ def browser(request):
         # logger.addHandler(ch)
         pass
 
-        def before_navigate_to(self, url, driver):
-            self.logger.info(f"I'm navigating to {url} and {driver.title}")
-
-        def after_navigate_to(self, url, driver):
-            self.logger.info(f"I'm on {url}")
-
-        def before_navigate_back(self, driver):
-            self.logger.info(f"I'm navigating back")
-
-        def after_navigate_back(self, driver):
-            self.logger.info(f"I'm back!")
-
-        def before_find(self, by, value, driver):
-            self.logger.info(f"I'm looking for '{value}' with '{by}'")
-
-        def after_find(self, by, value, driver):
-            self.logger.info(f"I've found '{value}' with '{by}'")
-
-        def before_click(self, element, driver):
-            self.logger.info(f"I'm clicking {element}")
-
-        def after_click(self, element, driver):
-            self.logger.info(f"I've clicked {element}")
-
-        def before_execute_script(self, script, driver):
-            self.logger.info(f"I'm executing '{script}'")
-
-        def after_execute_script(self, script, driver):
-            self.logger.info(f"I've executed '{script}'")
-
-        def before_quit(self, driver):
-            self.logger.info(f"I'm getting ready to terminate {driver}")
-
-        def after_quit(self, driver):
-            self.logger.info(f"Driver Quit")
+        # def before_navigate_to(self, url, driver):
+        #     self.logger.info(f"I'm navigating to {url} and {driver.title}")
+        #
+        # def after_navigate_to(self, url, driver):
+        #     self.logger.info(f"I'm on {url}")
+        #
+        # def before_navigate_back(self, driver):
+        #     self.logger.info(f"I'm navigating back")
+        #
+        # def after_navigate_back(self, driver):
+        #     self.logger.info(f"I'm back!")
+        #
+        # def before_find(self, by, value, driver):
+        #     self.logger.info(f"I'm looking for '{value}' with '{by}'")
+        #
+        # def after_find(self, by, value, driver):
+        #     self.logger.info(f"I've found '{value}' with '{by}'")
+        #
+        # def before_click(self, element, driver):
+        #     self.logger.info(f"I'm clicking {element}")
+        #
+        # def after_click(self, element, driver):
+        #     self.logger.info(f"I've clicked {element}")
+        #
+        # def before_execute_script(self, script, driver):
+        #     self.logger.info(f"I'm executing '{script}'")
+        #
+        # def after_execute_script(self, script, driver):
+        #     self.logger.info(f"I've executed '{script}'")
+        #
+        # def before_quit(self, driver):
+        #     self.logger.info(f"I'm getting ready to terminate {driver}")
+        #
+        # def after_quit(self, driver):
+        #     self.logger.info(f"Driver Quit")
 
     if browser_name == "firefox":
         options = FirefoxOptions()
